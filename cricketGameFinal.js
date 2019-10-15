@@ -6,6 +6,7 @@ class Batsman {
     this.name = name;
     this.noOfRuns = 0;
     this.isOut = false;
+    this.hasPlayed = false;
   }
 }
 
@@ -69,7 +70,9 @@ teamScoring  (gameResultString);
 //The team chooses who is to be the first two batsmen on the field
 
 let firstBatman = theTeam[0];
+theTeam[0].hasPlayed =false;
 let secondBatsman = theTeam[1];
+theTeam[1].hasPlayed =false;
 let waitingBatsmen = theTeam.slice(2);
 let playersPlayed = theTeam.slice(0,2);
 
@@ -136,6 +139,7 @@ const wicket = () => {
   activeBatsman.isOut = true;
     if (waitingBatsmen.length >0) {
      activeBatsman = waitingBatsmen.shift();
+     activeBatsman.hasPlayed = true;
     }
 }
 
@@ -146,11 +150,10 @@ console.log (theTeam)
 const printTeamResults = () => {
   for (i=0; i<theTeam.length; i++){
     let message = `${theTeam[i].name}:`
-    //ToDo need to add a property that records if a batsman has played or not, the task asked for all those who had not batted to be marked with '-'. In this example all the batsmen have been on teh field. 
-    // if (theTeam[i].noOfRuns === 0 && !theTeam[i].isOut){
-    //   console.log (message.concat ("-")); 
-    // }
-    if (!theTeam[i].isOut){
+    if (!theTeam[i].hasPlayed){
+      console.log (message.concat ("-"));
+    }
+    else if (!theTeam[i].isOut){
       console.log (message.concat (`${theTeam[i].noOfRuns} not out`));
     }
     else {
